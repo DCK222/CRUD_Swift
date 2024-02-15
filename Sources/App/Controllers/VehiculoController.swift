@@ -10,6 +10,13 @@ struct VehiculoController: RouteCollection {
         api.get("obtenerVehiculo", ":id", use: obtenerVehiculo)
         api.delete("eliminarVehiculo", ":id", use: eliminarVehiculo)
         api.put("actualizarVehiculo", ":id", use: actualizarVehiculo)
+        api.get("obtenerPorModelo", ":modelo", use: obtenerPorModelo)
+        api.get("obtenerPorMarca", ":marca", use: obtenerPorMarca)
+        api.get("obtenerPorNumeroDeRuedas", ":numeroDeRuedas", use: obtenerPorNumeroDeRuedas)
+        api.get("obtenerPortipoDeCombustible", ":tipoDeCombustible", use: obtenerPortipoDeCombustible)
+        api.get("obtenerPorPantallaCentral", ":pantallaCentral", use: obtenerPorPantallaCentral)
+        api.get("obtenerPorTamañoPantalla", ":tamañoPantalla", use: obtenerPorTamañoPantalla)
+
     }
 
     func actualizarVehiculo(req: Request) async throws -> Vehiculo {
@@ -53,8 +60,64 @@ struct VehiculoController: RouteCollection {
         }
         return vehiculo
     }
+    func obtenerPorModelo(req: Request) async throws -> [Vehiculo] {
+        guard let modelo = req.parameters.get("modelo") else {
+            throw Abort(.badRequest, reason: "Se necesita especificar un modelo")
+        }
 
-    func obtenerVehiculos(req: Request) async throws -> [Vehiculo] {
+        // Utiliza una consulta para filtrar vehículos por el campo del modelo
+        let vehiculos = try await Vehiculo.query(on: req.db).filter(\.$modelo == modelo).all()
+        return vehiculos
+    }
+    func obtenerPorMarca(req: Request) async throws -> [Vehiculo] {
+        guard let marca = req.parameters.get("marca") else {
+            throw Abort(.badRequest, reason: "Se necesita especificar un modelo")
+        }
+
+        // Utiliza una consulta para filtrar vehículos por el campo del modelo
+        let vehiculos = try await Vehiculo.query(on: req.db).filter(\.$marca == marca).all()
+        return vehiculos
+    }
+    func obtenerPorNumeroDeRuedas(req: Request) async throws -> [Vehiculo] {
+        guard let numeroDeRuedasString = req.parameters.get("numeroDeRuedas"),
+              let numeroDeRuedas = Int(numeroDeRuedasString) else {
+            throw Abort(.badRequest, reason: "Se necesita especificar el número de ruedas como un entero")
+        }
+
+        let vehiculos = try await Vehiculo.query(on: req.db).filter(\.$numeroDeRuedas == numeroDeRuedas).all()
+        return vehiculos
+    }
+    func obtenerPortipoDeCombustible(req: Request) async throws -> [Vehiculo] {
+        guard let tipoDeCombustible = req.parameters.get("tipoDeCombustible") else {
+            throw Abort(.badRequest, reason: "Se necesita especificar un modelo")
+        }
+
+        // Utiliza una consulta para filtrar vehículos por el campo del modelo
+        let vehiculos = try await Vehiculo.query(on: req.db).filter(\.$tipoDeCombustible == tipoDeCombustible).all()
+        return vehiculos
+    }
+
+      func obtenerPorPantallaCentral(req: Request) async throws -> [Vehiculo] {
+        guard let pantallaCentralString = req.parameters.get("pantallaCentral"),
+              let pantallaCentral = Bool(pantallaCentralString) else {
+            throw Abort(.badRequest, reason: "Se necesita especificar 'pantallaCentral' como true o false")
+        }
+
+        let vehiculos = try await Vehiculo.query(on: req.db).filter(\.$pantallaCentral == pantallaCentral).all()
+        return vehiculos
+    }
+
+    func obtenerPorTamañoPantalla(req: Request) async throws -> [Vehiculo] {
+        guard let tamañoPantallaString = req.parameters.get("tamañoPantalla"),
+              let tamañoPantalla = Float(tamañoPantallaString) else {
+            throw Abort(.badRequest, reason: "Se necesita especificar 'tamañoPantalla' como un número")
+        }
+
+        let vehiculos = try await Vehiculo.query(on: req.db).filter(\.$tamañoPantalla == tamañoPantalla).all()
+        return vehiculos
+    }
+}
+     func obtenerVehiculos(req: Request) async throws -> [Vehiculo] {
         try await Vehiculo.query(on: req.db).all()
     }
 
