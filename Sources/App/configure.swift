@@ -14,10 +14,7 @@ public func configure(_ app: Application) async throws {
         tls: .prefer(try .init(configuration: .clientDefault))
     )), as: .psql)
 
-    // Configuración de migraciones: Asegúrate de reemplazar o eliminar migraciones no relacionadas y agregar las de vehículos
-    // app.migrations.add(CreateTodo()) // Eliminar o comentar si no es necesario
-    // app.migrations.add(CreateUsuarios()) // Eliminar o comentar si no es necesario
-    // app.migrations.add(UpdateTableUsuarios()) // Eliminar o comentar si no es necesario
+    
     app.migrations.add(CrearVehiculo()) // Asegúrate de tener esta migración para los vehículos
 
     // Ejecuta automáticamente las migraciones al iniciar la aplicación
