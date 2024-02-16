@@ -3,10 +3,13 @@
 <head>
   <meta charset="utf-8">
 
-  <title>#(title)</title>
+  <title>Index</title>
 </head>
 
 <body>
-  <h1>#(title)</h1>
+  <h1>#(id)</h1>
+  <h1>#(marca)</h1>
+  <h1>#(modelo)</h1>
+ 
 </body>
 </html>

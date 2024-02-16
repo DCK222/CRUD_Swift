@@ -14,8 +14,7 @@ struct VehiculoController: RouteCollection {
         api.get("obtenerPorMarca", ":marca", use: obtenerPorMarca)
         api.get("obtenerPorNumeroDeRuedas", ":numeroDeRuedas", use: obtenerPorNumeroDeRuedas)
         api.get("obtenerPortipoDeCombustible", ":tipoDeCombustible", use: obtenerPortipoDeCombustible)
-        api.get("obtenerPorPantallaCentral", ":pantallaCentral", use: obtenerPorPantallaCentral)
-        api.get("obtenerPorTamañoPantalla", ":tamañoPantalla", use: obtenerPorTamañoPantalla)
+        
 
     }
 
@@ -97,26 +96,29 @@ struct VehiculoController: RouteCollection {
         return vehiculos
     }
 
-      func obtenerPorPantallaCentral(req: Request) async throws -> [Vehiculo] {
-        guard let pantallaCentralString = req.parameters.get("pantallaCentral"),
-              let pantallaCentral = Bool(pantallaCentralString) else {
-            throw Abort(.badRequest, reason: "Se necesita especificar 'pantallaCentral' como true o false")
-        }
-
-        let vehiculos = try await Vehiculo.query(on: req.db).filter(\.$pantallaCentral == pantallaCentral).all()
-        return vehiculos
-    }
-
-    func obtenerPorTamañoPantalla(req: Request) async throws -> [Vehiculo] {
-        guard let tamañoPantallaString = req.parameters.get("tamañoPantalla"),
-              let tamañoPantalla = Float(tamañoPantallaString) else {
-            throw Abort(.badRequest, reason: "Se necesita especificar 'tamañoPantalla' como un número")
-        }
-
-        let vehiculos = try await Vehiculo.query(on: req.db).filter(\.$tamañoPantalla == tamañoPantalla).all()
-        return vehiculos
-    }
 }
+
+func obtenerPorPantallaCentral(req: Request) async throws -> [Vehiculo] {
+    guard let pantallaCentralString = req.parameters.get("pantallaCentral"),
+          let pantallaCentral = Bool(pantallaCentralString) else {
+        throw Abort(.badRequest, reason: "Se necesita especificar la presencia de pantalla central como true o false")
+    }
+
+    let vehiculos = try await Vehiculo.query(on: req.db).filter(\.$pantallaCentral == pantallaCentral).all()
+    return vehiculos
+}
+
+func obtenerPorTamañoPantalla(req: Request) async throws -> [Vehiculo] {
+    guard let tamañoPantallaString = req.parameters.get("tamañoPantalla"),
+          let tamañoPantalla = Float(tamañoPantallaString) else {
+        throw Abort(.badRequest, reason: "Se necesita especificar el tamaño de la pantalla como un número")
+    }
+
+    // Utiliza el operador de igualdad `==` para filtrar vehículos por el tamaño exacto de la pantalla
+    let vehiculos = try await Vehiculo.query(on: req.db).filter(\.$tamañoPantalla == tamañoPantalla).all()
+    return vehiculos
+}
+
      func obtenerVehiculos(req: Request) async throws -> [Vehiculo] {
         try await Vehiculo.query(on: req.db).all()
     }
@@ -126,4 +128,4 @@ struct VehiculoController: RouteCollection {
         try await vehiculo.create(on: req.db)
         return vehiculo
     }
-}
+
