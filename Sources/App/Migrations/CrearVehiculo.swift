@@ -9,7 +9,7 @@ struct CrearVehiculo: AsyncMigration {
             .field("numero_de_ruedas", .int, .required)
             .field("tipo_de_combustible", .string, .required)
             .field("pantalla_central", .bool, .required)
-            .field("tamaño_pantalla", .float) // Opcional, ya que no todos los vehículos tienen pantalla
+            .field("tamaño_pantalla", .float) 
             .create()
     }
 

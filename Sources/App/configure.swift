@@ -4,7 +4,7 @@ import Leaf
 import Vapor
 
 public func configure(_ app: Application) async throws {
-    // Configuración de la base de datos PostgreSQL
+    
     app.databases.use(DatabaseConfigurationFactory.postgres(configuration: .init(
         hostname: Environment.get("DATABASE_HOST") ?? "localhost",
         port: Environment.get("DATABASE_PORT").flatMap(Int.init(_:)) ?? SQLPostgresConfiguration.ianaPortNumber,
@@ -15,14 +15,14 @@ public func configure(_ app: Application) async throws {
     )), as: .psql)
 
     
-    app.migrations.add(CrearVehiculo()) // Asegúrate de tener esta migración para los vehículos
+    app.migrations.add(CrearVehiculo()) 
 
-    // Ejecuta automáticamente las migraciones al iniciar la aplicación
+    
     try await app.autoMigrate()
 
-    // Configuración de vistas Leaf si es necesario para tu proyecto
+    
     app.views.use(.leaf)
 
-    // Registro de rutas
+    
     try routes(app)
 }

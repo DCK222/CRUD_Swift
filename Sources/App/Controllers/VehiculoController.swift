@@ -64,7 +64,7 @@ struct VehiculoController: RouteCollection {
             throw Abort(.badRequest, reason: "Se necesita especificar un modelo")
         }
 
-        // Utiliza una consulta para filtrar vehículos por el campo del modelo
+       
         let vehiculos = try await Vehiculo.query(on: req.db).filter(\.$modelo == modelo).all()
         return vehiculos
     }
@@ -73,7 +73,7 @@ struct VehiculoController: RouteCollection {
             throw Abort(.badRequest, reason: "Se necesita especificar un modelo")
         }
 
-        // Utiliza una consulta para filtrar vehículos por el campo del modelo
+       
         let vehiculos = try await Vehiculo.query(on: req.db).filter(\.$marca == marca).all()
         return vehiculos
     }
@@ -91,7 +91,7 @@ struct VehiculoController: RouteCollection {
             throw Abort(.badRequest, reason: "Se necesita especificar un modelo")
         }
 
-        // Utiliza una consulta para filtrar vehículos por el campo del modelo
+        
         let vehiculos = try await Vehiculo.query(on: req.db).filter(\.$tipoDeCombustible == tipoDeCombustible).all()
         return vehiculos
     }
@@ -114,7 +114,7 @@ func obtenerPorTamañoPantalla(req: Request) async throws -> [Vehiculo] {
         throw Abort(.badRequest, reason: "Se necesita especificar el tamaño de la pantalla como un número")
     }
 
-    // Utiliza el operador de igualdad `==` para filtrar vehículos por el tamaño exacto de la pantalla
+    
     let vehiculos = try await Vehiculo.query(on: req.db).filter(\.$tamañoPantalla == tamañoPantalla).all()
     return vehiculos
 }
