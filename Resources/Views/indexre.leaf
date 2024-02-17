@@ -45,23 +45,24 @@
       </div>
     </nav>
   </header>
- 
+  <h2>Copia y pega los id </h2>
+  <p>Ejemplo : 127.0.0.1:8080/FD8BA953-DDBA-400D-AD9F-221DCF29DE0E </p>
   <div id="contenedorid">
-  <div style="width:600px; "; class="card">
+  <div style="width:400px;" class="card">
   <div class="card-body">
-    <p> Id : #(id)</p>
+    Id1 : FD8BA953-DDBA-400D-AD9F-221DCF29DE0E
   </div>
   <div class="card-body">
-    <p>Marca : #(marca)</p>
+    Id2 : 3472AD1F-D248-4952-88E2-614AA15F5869
   </div>
   <div class="card-body">
-     <p>Modelo : #(modelo)</p>
+    Id3 : D4972F4C-BCFE-4A9F-A196-9695E506012C
   </div>
   <div class="card-body">
-    <p>Tipo de Combustible : #(tipoDeCombustible)</p>
+    Id4 : F240D7E1-3D88-4EA2-A7FA-3B5647792045
   </div>
   <div class="card-body">
-    <p>Pantalla Central : #(pantallaCentral)</p>
+    Id5 : CBA1BC3A-C98B-4EF7-AEBE-F5763D5FFFC5
   </div>
 </div>
 </div>
@@ -83,7 +84,10 @@
     display : flex;
     align-intens : center;
     justify-content : center;
-    margin-top:70px;
+    margin-top:50px;
 }
-
+p,h2{
+margin-left: 30px;
+margin-top :30px;
+}
 </style>
